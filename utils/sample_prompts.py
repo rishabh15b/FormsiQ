@@ -1,38 +1,12 @@
 sample_transcripts = [
-    # Clean and standard
-    "Hi, I'm Mark Davis. I'm applying for a mortgage of $275,000. I work for Home Depot and my monthly income is $5,800.",
-
-    "I just got a new job at Amazon and my boss is really supportive. I think I can get a loan of around $300,000. My friend said I should check out some places in Austin. I also have a pet turtle named Speedy.",
-
-    # Vague amount, past employer
-    "This is Laura Chen. I think I can get a loan — maybe $300,000. I used to work at Chase but recently changed jobs. My therapist says buying now is a good idea.",
-
-    # Multiple income sources, possible ambiguity
-    "I'm Daniel. I earn $6,200 a month, plus some stock options and annual bonus. My loan would be $400,000. I have a car loan and some credit card debt as well.",
-
-    # Hallucination-prone terms
-    "My name is Sarah Lopez. I'm not sure about the amount yet. My astrologer says I should buy in June. I keep my savings in Bitcoin. My husband might co-sign the application.",
-
-    # Minimal input
-    "Yeah, I spoke with someone about the process. Didn't decide the amount or anything. Still thinking.",
-
-    # Address + employer
-    "Good afternoon, I'm Jane Smith. I want to refinance my home. The property is at 45 Lakeview Dr, Austin. I earn $8,500 monthly and work at Capital One. I'm requesting a loan of $300,000.",
-
-    # Long form with pet name
-    "Hi, I'm Robert Martinez. I'm thinking about a mortgage of $280,000. I work at Lowe's and live at 890 Cypress Hill Rd. My birthdate is August 15, 1986. My dog's name is Bruno.",
-
-    # Informal, mix of relevant/irrelevant
-    "Hello, I'm Emily Carson. I might need a loan of around $350,000. I've worked at Starbucks for about 4 years. My coach recommended I buy a place at 512 Sunset Avenue, Austin. I also get tips every week, and I share rent with my sister.",
-
-    # Loan originator field
-    "My loan originator is Sarah Walker. I'm asking for a $375,000 loan to buy a new house. I work at Costco and earn $7,000 monthly.",
-
-    # Entirely off-topic
-    "This conversation is about vacation planning and our favorite books. No financial stuff here.",
-    
-    "I spoke with my financial advisor and they suggested I might want to consider a loan of $400,000. I have some savings in stocks and bonds, but I'm not sure how much I can use for a down payment. My cousin is a real estate agent and she said the market is really hot right now.",
-    
-    # Informal, mix of relevant/irrelevant
-    "Hey there. I was chatting with a friend and they said I should probably look into buying a home soon. No idea how much of a loan I'd need — maybe something like $250k or so? I've done some contracting for Dell in the past.",
+    "Hi, my name's Daniel. I'm not sure what I qualify for yet. I might need a loan but haven't figured out the amount. Oh, and my turtle's name is Flash—he's been with me for 10 years!",
+    "Good afternoon, I'm Michael Taylor. I was born on May 12, 1980, and I want to refinance my house at 123 Ocean View Blvd. I work at IBM and earn roughly $9,500 per month.",
+    "Hi, I'm Laura. I might be interested in getting a home loan... maybe somewhere around $400,000? I worked at Apple a while ago but recently switched fields. Just exploring options for now.",
+    "Hi there. I'm Emily. I've been looking into mortgages, but I don't have income details right now. I just wanted to learn about the application process. Not ready to proceed yet.",
+    "Yes, my name's George. I own a rental property at 55 Birch Lane bringing in about $1,200 monthly. I'm looking to apply for a $150,000 loan to help with some home renovations.",
+    "Hey, I've been thinking about buying a place. Don't really know where to start or how much I'd need. Just wanted to ask a few questions before jumping in.",
+    "Hey, this is Jessica Lee. I'd like to discuss getting a mortgage. My SSN is 123-45-6789 and I'm hoping to get a loan for $325,000. I'm employed at Citibank and take home about $7,000 monthly.",
+    "Hi, I'm Robert Gray calling about a mortgage application. I'm looking to borrow $280,000 for a home purchase. I work full-time at FedEx and earn around $6,200 per month.",
+    "Hello, I'm Sarah. A friend told me about your services. I haven't settled on an amount, but they got approved for $300,000. I might look into something similar.",
+    "Hi there, this is Priya Nair. I run my own consulting business—Nair Consulting. I'm self-employed and want to apply for a $200,000 mortgage. I've been in this line of work for about 5 years."
 ]

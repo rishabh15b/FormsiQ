@@ -30,47 +30,55 @@ def extract_fields_from_transcript(transcript: str):
     prompt = f"""
 You are an AI assistant that extracts structured data from a mortgage-related conversation transcript.
 
-Your task is to extract clearly stated facts. These may include standard mortgage application fields as well as additional personal, informal, or financial details.
+Your goal is to identify clearly stated facts relevant to a mortgage application. These may include both standard 1003 form fields and additional personal or informal details.
 
 Use one of the following official 1003 field names **if there is a clear match**:
 
 {field_list_string}
 
-If no match applies, generate a descriptive and concise custom field name (e.g., "Pet Name", "Spiritual Advisor", "Bitcoin Holdings").
+If no match applies, generate a clear and concise custom field name (e.g., "Pet Name", "Spiritual Advisor", "Bitcoin Holdings").
 
 ---
 
-Assign a confidence score for each field based on how clearly it was stated:
+For each field, assign a **confidence_score** between **0.0 and 1.0** using these guidelines:
 
-- 1.0 → directly and explicitly mentioned
-- 0.7 → implied or casually referenced
-- 0.5 or lower → vague, uncertain, or inferred
+- Start at 1.0 if the value is **explicitly stated** in a clear, confident, assertive sentence:
+    - e.g., “I am applying for a loan of $300,000.”
+    - e.g., “I work at Wells Fargo.”
+    - e.g., “My name is Sarah.”
 
-You must NOT assign 1.0 unless the value is directly, clearly, and confidently stated without any uncertainty, hesitation, or speculation.
+- Reduce confidence to **0.8 - 0.95** if the value is mostly clear but lacks emphasis or full context:
+    - e.g., “I think I'll need about $250,000.”
+    - e.g., “I'm probably working at Dell.”
 
-For example:
-- “I need a loan of $300,000” → 1.0
-- “Maybe something like $300,000” → 0.5 or lower
-- “I used to work at Dell” → 0.6 (for previous employer)
+- Drop to **0.5 - 0.7** if phrasing is hesitant, indirect, or speculative:
+    - e.g., “Maybe something like $200,000.”
+    - e.g., “I used to be at JPMorgan, I think.”
 
-Return only the final output in this JSON format — no extra text:
+- Use **< 0.5** if the mention is vague, hypothetical, or highly uncertain:
+    - e.g., “Someone said I might need a mortgage.”
+    - e.g., “I'm still figuring out income.”
+
+Score based on **sentence structure, language certainty, and proximity of value to context**. Think carefully and grade naturally — no need to round to 0.5, 0.7, or 1.0. Use any float between 0.0 and 1.0.
+
+Return only a clean JSON response. No extra commentary.
 
 {{
   "fields": [
     {{
       "field_name": "Loan Amount",
-      "field_value": "$350,000",
-      "confidence_score": 1.0
+      "field_value": "$300,000",
+      "confidence_score": 0.93
     }},
     {{
       "field_name": "Pet Name",
       "field_value": "Luna",
-      "confidence_score": 0.6
+      "confidence_score": 0.57
     }},
     {{
       "field_name": "Spiritual Advisor",
       "field_value": "my advisor",
-      "confidence_score": 0.5
+      "confidence_score": 0.50
     }}
   ]
 }}
@@ -78,12 +86,13 @@ Return only the final output in this JSON format — no extra text:
 Transcript:
 \"\"\"{transcript}\"\"\"
 """
+
     # Generate content using the model
     # The model is expected to return a JSON response with the extracted fields
     # The response is then parsed to extract the relevant fields and their corresponding confidence scores
     # The function also handles any exceptions that may occur during the process
     try:
-        response = model.generate_content(prompt, generation_config={"temperature": 0.4})
+        response = model.generate_content(prompt, generation_config={"temperature": 0.3})
         # print("Response:", response.text)
         # Extract the JSON part from the response
         start = response.text.find("{")
@@ -122,7 +131,7 @@ Transcript:
 
         numbered_output = []
         for idx, field in enumerate(filtered_fields, start=1):
-            line = f"{idx} {field['field_name']}: {field['field_value']} (Confidence: {field['confidence_score']:.2f})"
+            line = f"{idx}{'.'} {field['field_name']}: {field['field_value']} (Confidence: {field['confidence_score']:.2f})"
             numbered_output.append(line)
 
         return {"formatted_output": numbered_output}

@@ -59,7 +59,7 @@ if st.button("Extract Fields"):
                         st.write(line)
                 else:
                     st.error("No fields were extracted.")
-                    st.json(result)
+                    # st.json(result)
 
             except Exception as e:
                 st.error(f"API error: {e}")

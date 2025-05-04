@@ -1,5 +1,9 @@
 # FormsiQ – Mortgage Transcript Field Extractor
 
+=====================================
+![alt text](image.png)
+=====================================
+
 FormsiQ is an AI-powered application that extracts structured field data from mortgage call transcripts using Google Gemini. It supports mapping fields to the official **1003 Uniform Residential Loan Application (URLA)** format and includes confidence scoring, error handling, and unmapped field logging for full traceability.
 
 ---
@@ -94,10 +98,10 @@ FormsiQ is an AI-powered application that extracts structured field data from mo
 
 ## How Confidence Works
 
-- 1.0 → Clearly and explicitly stated in transcript
-- 0.7 → Informal or implied (e.g., "my coach", "maybe 250k")
+- Pattern Matching: Detects direct keyword-value relationships (e.g., “I need a loan of $300,000” → 1.0).
+- Sentence Structure: Evaluates certainty, hesitancy, or speculation in phrasing (e.g., “maybe around $300k” → 0.65).
 - ≤ 0.5 → Vague, speculative, or conflicting information
-- Unmapped or nonstandard fields are saved to unmapped_fields_log.txt.
+- Proximity & Clarity: Scores higher when field-value pairs are close and unambiguous in context.
 
 ---
 
@@ -105,6 +109,7 @@ FormsiQ is an AI-powered application that extracts structured field data from mo
 
 ```bash
 # 1. Clone the repo and install dependencies:
+- git clone https://github.com/rishabh15b/FormsiQ
 - pip install -r requirements.txt
 
 # 2. Add your Gemini API key to a .env file:
@@ -121,9 +126,12 @@ FormsiQ is an AI-powered application that extracts structured field data from mo
 
 ## Important Notes
 
-- Only fields that appear word-for-word are accepted.
-- The model avoids hallucination by filtering through transcript matching and a controlled mapping list.
-- Output is usable directly in underwriting or automation workflows.
+- Only clearly stated fields are extracted — no guessing.
+- Confidence score is dynamic (0.0–1.0) based on sentence clarity.
+- Hallucinated or irrelevant fields are filtered and logged.
+- Mapping is strictly based on 1003 form + fallback for custom fields.
+- Output is clean, structured, and directly usable.
+- Edge and vague cases are synthetically tested.
 
 ---
 
