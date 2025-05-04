@@ -83,8 +83,9 @@ FormsiQ is an AI-powered application that extracts structured field data from mo
 │   ├── extractor.py         # Field extraction logic
 │   ├── field_map.py         # 1003 form mapping dictionary
 │   └── sample_prompts.py    # Test prompts
-├── test_data/               # run_test file gets saved
+├── test_result/             # run_test file gets saved
 ├── run_tests.py             # Script for bulk testing edge cases
+├── unmapped_fields_log.txt  # Unmapped fields are logged in unmapped_fields_log.txt for debugging
 ├── requirements.txt
 └── README.md
 
