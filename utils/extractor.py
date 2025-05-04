@@ -84,7 +84,7 @@ Transcript:
     # The function also handles any exceptions that may occur during the process
     try:
         response = model.generate_content(prompt, generation_config={"temperature": 0.4})
-        print("Response:", response.text)
+        # print("Response:", response.text)
         # Extract the JSON part from the response
         start = response.text.find("{")
         end = response.text.rfind("}") + 1
@@ -105,13 +105,12 @@ Transcript:
 
             # Only allow if std_name is part of official 1003 fields
             if std_name in FIELD_NAME_MAP.values():
-                if value.lower().replace(",", "").strip() in transcript_lower:
-
-                    filtered_fields.append({
-                        "field_name": std_name,
-                        "field_value": value,
-                        "confidence_score": score
-                    })
+                # if value.lower().replace(",", "").strip() in transcript_lower:
+              filtered_fields.append({
+                  "field_name": std_name,
+                  "field_value": value,
+                  "confidence_score": score
+              })
             else:
                 unmapped_fields.add(std_name)
 
@@ -121,7 +120,12 @@ Transcript:
                 for name in sorted(unmapped_fields):
                     f.write(f"{name}\n")
 
-        return {"fields": filtered_fields}
+        numbered_output = []
+        for idx, field in enumerate(filtered_fields, start=1):
+            line = f"{idx} {field['field_name']}: {field['field_value']} (Confidence: {field['confidence_score']:.2f})"
+            numbered_output.append(line)
+
+        return {"formatted_output": numbered_output}
 
     except Exception as e:
         return {

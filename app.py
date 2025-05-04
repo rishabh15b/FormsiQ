@@ -15,7 +15,7 @@ if "transcript" not in st.session_state:
 st.sidebar.title("Sample Input")
 st.sidebar.markdown("Select a sample transcript to test the model's performance.")
 st.sidebar.markdown("**Note:** The model may not always extract the correct fields. Please verify the results.")
-st.sidebar.markdown("**⚠️ Important:** The model may hallucinate or misinterpret information. Always double-check the extracted fields.")
+st.sidebar.markdown("**Important:** The model may hallucinate or misinterpret information. Always double-check the extracted fields.")
 st.sidebar.subheader("Test Transcript")
 selected_prompt = st.sidebar.selectbox(
     "Choose a sample input:",
@@ -53,25 +53,13 @@ if st.button("Extract Fields"):
                 )
                 result = response.json()
 
-                if "fields" in result:
+                if "formatted_output" in result and result["formatted_output"]:
                     st.subheader("Extracted Fields")
-                    for field in result["fields"]:
-                        # st.write(f"{field['field_name']}: {field['field_value']} (Confidence: {field['confidence_score']})")
-                        st.json(field)
+                    for line in result["formatted_output"]:
+                        st.write(line)
                 else:
                     st.error("No fields were extracted.")
                     st.json(result)
-
-                # # Read and display unmapped fields in sidebar
-                # try:
-                #     with open("unmapped_fields_log.txt", "r") as f:
-                #         unmapped = [line.strip() for line in f.readlines() if line.strip()]
-                #     if unmapped:
-                #         st.sidebar.markdown(f"**⚠️ {len(unmapped)} unmapped field(s) detected:**")
-                #         for field in unmapped:
-                #             st.sidebar.markdown(f"- {field}")
-                # except FileNotFoundError:
-                #     pass
 
             except Exception as e:
                 st.error(f"API error: {e}")

@@ -1,5 +1,6 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, ValidationError
 from utils.extractor import extract_fields_from_transcript
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,6 +25,14 @@ app.add_middleware(
 # The `TranscriptInput` class is a Pydantic model that defines the structure of the input data for the API endpoint.
 class TranscriptInput(BaseModel):
     transcript: str
+
+
+@app.exception_handler(ValidationError)
+async def validation_exception_handler(request: Request, exc: ValidationError):
+    return JSONResponse(
+        status_code=400,
+        content={"error": "Invalid input format. Expected a JSON with a 'transcript' string."}
+    )
 
 # The `extract_fields` function is a FastAPI endpoint that handles POST requests to the `/extract-fields` URL.
 @app.post("/extract-fields")
