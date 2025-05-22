@@ -116,7 +116,7 @@ FormsiQ is an AI-powered application that extracts structured field data from mo
 - GEMINI_API_KEY=your-api-key-here
 
 # 3. Run the backend:
-- uvicorn api:app --reload
+- uvicorn utils.api:app --reload
 
 # 4. In another terminal, run the Streamlit app:
 - streamlit run app.py
